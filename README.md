@@ -36,6 +36,8 @@ Fitur :
 - Halaman User Pegawai yaitu pada laman ini admin dapat menambah user 
   pegawai pada database pegawai dengan rincian nama pegawai, alamat 
   pegawai, nomor telepon pegawai, username akun pegawai, dan password akun 
-  pegawai.- Logout yaitu user keluar dari program FSE (Firo Smart Seller)
+  pegawai.
+  
+  - Logout yaitu user keluar dari program FSE (Firo Smart Seller)
 
 
