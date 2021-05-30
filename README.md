@@ -38,6 +38,6 @@ Fitur :
   pegawai, nomor telepon pegawai, username akun pegawai, dan password akun 
   pegawai.
   
-  - Logout yaitu user keluar dari program FSE (Firo Smart Seller)
+- Logout yaitu user keluar dari program FSE (Firo Smart Seller)
 
 
