@@ -14,7 +14,7 @@ class MyGui(wxframe):
         uname = self.username.GetValue()
         password = self.password.GetValue()
 
-        if uname == '{username}' and password == '{username}':
+        if uname == 'admin' and password == 'admin':
             self.Close()
             frame1 = MyGui1(None)
             frame1.Show()
