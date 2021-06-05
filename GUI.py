@@ -44,16 +44,16 @@ class Login ( wx.Frame ):
 
 		gSizer3.Add( self.m_staticText11, 0, wx.ALL, 5 )
 
-		self.username = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.username, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
+		self.CtrlUsername = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.CtrlUsername, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
 
 		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText12.Wrap( -1 )
 
 		gSizer3.Add( self.m_staticText12, 0, wx.ALL, 5 )
 
-		self.password = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
-		gSizer3.Add( self.password, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
+		self.CtrlPassword = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
+		gSizer3.Add( self.CtrlPassword, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
 
 
 		bSizer10.Add( gSizer3, 1, wx.ALL|wx.EXPAND, 5 )
@@ -918,7 +918,7 @@ class Help ( wx.Frame ):
 class Transaction ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Transaction", pos = wx.DefaultPosition, size = wx.Size( 630,598 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Transaction", pos = wx.DefaultPosition, size = wx.Size( 632,598 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INACTIVECAPTION ) )
@@ -970,40 +970,8 @@ class Transaction ( wx.Frame ):
 
 		gSizer42 = wx.GridSizer( 0, 6, 0, 0 )
 
-		self.tableTransaction = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
-
-		# Grid
-		self.tableTransaction.CreateGrid( 10, 6 )
-		self.tableTransaction.EnableEditing( True )
-		self.tableTransaction.EnableGridLines( True )
-		self.tableTransaction.EnableDragGridSize( False )
-		self.tableTransaction.SetMargins( 0, 0 )
-
-		# Columns
-		self.tableTransaction.AutoSizeColumns()
-		self.tableTransaction.EnableDragColMove( False )
-		self.tableTransaction.EnableDragColSize( True )
-		self.tableTransaction.SetColLabelSize( 30 )
-		self.tableTransaction.SetColLabelValue( 0, u"id_transaksi" )
-		self.tableTransaction.SetColLabelValue( 1, u"id_barang" )
-		self.tableTransaction.SetColLabelValue( 2, u"nama_barang" )
-		self.tableTransaction.SetColLabelValue( 3, u"harga_barang" )
-		self.tableTransaction.SetColLabelValue( 4, u"jumlah_beli" )
-		self.tableTransaction.SetColLabelValue( 5, u"total" )
-		self.tableTransaction.SetColLabelValue( 6, wx.EmptyString )
-		self.tableTransaction.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
-
-		# Rows
-		self.tableTransaction.AutoSizeRows()
-		self.tableTransaction.EnableDragRowSize( True )
-		self.tableTransaction.SetRowLabelSize( 50 )
-		self.tableTransaction.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
-
-		# Label Appearance
-
-		# Cell Defaults
-		self.tableTransaction.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		gSizer42.Add( self.tableTransaction, 0, wx.ALL, 5 )
+		self.listCtrlTransaction = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 600,300 ), wx.LC_AUTOARRANGE|wx.LC_REPORT )
+		gSizer42.Add( self.listCtrlTransaction, 0, wx.ALL, 5 )
 
 
 		bSizer32.Add( gSizer42, 1, wx.ALL|wx.EXPAND, 5 )
@@ -1087,6 +1055,7 @@ class Transaction ( wx.Frame ):
 		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem15.GetId() )
 		self.inputDataBtn.Bind( wx.EVT_BUTTON, self.inputDataClick )
 		self.deleteDataBtn.Bind( wx.EVT_BUTTON, self.deleteDataClick )
+		self.listCtrlTransaction.Bind( wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc )
 		self.okBtn.Bind( wx.EVT_BUTTON, self.okClick )
 
 	def __del__( self ):
@@ -1110,6 +1079,9 @@ class Transaction ( wx.Frame ):
 		event.Skip()
 
 	def deleteDataClick( self, event ):
+		event.Skip()
+
+	def handleSelectedTranc( self, event ):
 		event.Skip()
 
 	def okClick( self, event ):

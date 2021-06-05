@@ -2,6 +2,7 @@ import wx
 import GUI
 from wxframe3 import wxframe3
 from wxframe4 import wxframe4
+import models.dbsqlite as database
 
 wxframe = GUI.Login
 
@@ -11,18 +12,19 @@ class MyGui(wxframe):
         super().__init__(parent)
 
     def loginClick(self, event):
-        uname = self.username.GetValue()
-        password = self.password.GetValue()
-
-        if uname == 'admin' and password == 'admin':
+        self._connection = database.connection
+        userpemilik = self.CtrlUsername.GetValue()
+        passwpemilik = self.CtrlPassword.GetValue()
+        query = """SELECT * from pemilik where username_pemilik = ? and password_pemilik = ?"""
+        cursor = self._connection.cursor()
+        cursor.execute(query, (userpemilik, passwpemilik))
+        if cursor.fetchall():
+            wx.MessageBox("Login Berhasil!", "Login")
             self.Close()
             frame1 = MyGui1(None)
             frame1.Show()
-            wx.MessageBox('Login sukses', 'Informasi', wx.OK | wx.ICON_INFORMATION)
-            self.Destroy()
-        else:
-            wx.MessageBox('Login gagal', 'Terjadi kesalahan', wx.OK | wx.ICON_ERROR)
-        print('uname: ', uname, ',password: ', password)
+        else :
+            wx.MessageBox("Error", "Login Gagal !")
 
 
 wxframe1 = GUI.HomePemilik
