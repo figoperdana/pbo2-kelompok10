@@ -1,5 +1,6 @@
 import wx
 import GUI
+from wxframe2 import wxframe2
 from wxframe3 import wxframe3
 from wxframe4 import wxframe4
 import models.dbsqlite as database
@@ -36,7 +37,7 @@ class MyGui1(wxframe1):
 
     def transactionClick(self, event):
         self.Close()
-        frame2 = MyGui2(None)
+        frame2 = wxframetransaction(None)
         frame2.Show()
 
     def stockClick(self, event):
@@ -84,9 +85,8 @@ class wxframestock(wxframe3):
 
 
 
-wxframe2 = GUI.Transaction
 
-class MyGui2(wxframe2):
+class wxframetransaction(wxframe2):
     def __init__(self, parent):
         wxframe2.__init__(self, parent)
         super().__init__(parent)

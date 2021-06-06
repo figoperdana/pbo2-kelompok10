@@ -962,7 +962,7 @@ class Transaction ( wx.Frame ):
 
 		gSizer41.Add( self.m_staticText69, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
-		self.tanggalTransaksiBtn = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
+		self.tanggalTransaksiBtn = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DROPDOWN )
 		gSizer41.Add( self.tanggalTransaksiBtn, 0, wx.ALL, 5 )
 
 
