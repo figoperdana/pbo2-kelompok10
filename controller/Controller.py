@@ -50,6 +50,7 @@ class Controller():
 
         #class Home Pegawai
         self.homePegawaiView = classHomePegawai(parent=None)
+        self.homePegawaiView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.homePegawaiView.stock.Bind(wx.EVT_BUTTON, self.stockClick)
         self.homePegawaiView.transaction.Bind(wx.EVT_BUTTON, self.transactionClick)
 
@@ -115,7 +116,8 @@ class Controller():
         cursor.execute(query, (userpemilik, passwpemilik))
         if cursor.fetchall():
             wx.MessageBox("Login Berhasil!", "Login")
-            self.loginView.Close()
+            self.loginView.Hide()
+            self.loginPegawaiView.Hide()
             self.homePemilikView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
@@ -135,8 +137,8 @@ class Controller():
         cursor.execute(query, (userpegawai, passwpegawai))
         if cursor.fetchall():
             wx.MessageBox("Login Pegawai Berhasil!", "Login")
-            self.loginView.Close()
-            self.loginPegawaiView.Close()
+            self.loginView.Hide()
+            self.loginPegawaiView.Hide()
             self.homePegawaiView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
@@ -400,23 +402,12 @@ class Controller():
         self.homePemilikView.employee.Bind(wx.EVT_BUTTON, self.employeeClick)
         self.homePemilikView.income.Bind(wx.EVT_BUTTON, self.incomeClick)
         self.homePemilikView.Bind(wx.EVT_MENU, self.LogoutMenu)
+        
 
     def LogoutMenu(self, event):
-        self.homePemilikView.Close()
-        self.homePegawaiView.Close()
+        self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
         self.loginView.Show()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     #================

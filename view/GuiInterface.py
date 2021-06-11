@@ -183,12 +183,6 @@ class HomePemilik ( wx.Frame ):
 
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
-		self.Help = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.Append( self.Help )
-
-		self.About = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.Append( self.About )
-
 		self.Logout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.Append( self.Logout )
 
@@ -232,8 +226,6 @@ class HomePemilik ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.Bind( wx.EVT_MENU, self.HelpMenuPemilik, id = self.Help.GetId() )
-		self.Bind( wx.EVT_MENU, self.AboutMenuPemilik, id = self.About.GetId() )
 		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.Logout.GetId() )
 		self.stock.Bind( wx.EVT_BUTTON, self.stockClick )
 		self.transaction.Bind( wx.EVT_BUTTON, self.transactionClick )
@@ -245,12 +237,6 @@ class HomePemilik ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
-	def HelpMenuPemilik( self, event ):
-		event.Skip()
-
-	def AboutMenuPemilik( self, event ):
-		event.Skip()
-
 	def LogoutMenu( self, event ):
 		event.Skip()
 
@@ -368,15 +354,6 @@ class Stock ( wx.Frame ):
 		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu7.Append( self.m_menuItem12 )
 
-		self.m_menuItem13 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem13 )
-
-		self.m_menuItem14 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem14 )
-
-		self.m_menuItem15 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem15 )
-
 		self.m_menubar2.Append( self.m_menu7, u"Menu" )
 
 		self.SetMenuBar( self.m_menubar2 )
@@ -440,9 +417,6 @@ class Stock ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.HomeMenuBtnClick, id = self.m_menuItem12.GetId() )
-		self.Bind( wx.EVT_MENU, self.AboutMenu, id = self.m_menuItem13.GetId() )
-		self.Bind( wx.EVT_MENU, self.HelpMenu, id = self.m_menuItem14.GetId() )
-		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem15.GetId() )
 		self.addItemBtn.Bind( wx.EVT_BUTTON, self.addItemClick )
 		self.refreshItemBtn.Bind( wx.EVT_BUTTON, self.refreshItemClick )
 		self.editItemBtn.Bind( wx.EVT_BUTTON, self.editItemClick )
@@ -455,15 +429,6 @@ class Stock ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def HomeMenuBtnClick( self, event ):
-		event.Skip()
-
-	def AboutMenu( self, event ):
-		event.Skip()
-
-	def HelpMenu( self, event ):
-		event.Skip()
-
-	def LogoutMenu( self, event ):
 		event.Skip()
 
 	def addItemClick( self, event ):
@@ -647,15 +612,6 @@ class Employee ( wx.Frame ):
 		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu7.Append( self.m_menuItem12 )
 
-		self.m_menuItem13 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem13 )
-
-		self.m_menuItem14 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem14 )
-
-		self.m_menuItem15 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem15 )
-
 		self.m_menubar2.Append( self.m_menu7, u"Menu" )
 
 		self.SetMenuBar( self.m_menubar2 )
@@ -719,9 +675,6 @@ class Employee ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.HomeMenuBtnClick, id = self.m_menuItem12.GetId() )
-		self.Bind( wx.EVT_MENU, self.AboutMenu, id = self.m_menuItem13.GetId() )
-		self.Bind( wx.EVT_MENU, self.HelpMenu, id = self.m_menuItem14.GetId() )
-		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem15.GetId() )
 		self.addEmpBtn.Bind( wx.EVT_BUTTON, self.addEmpClick )
 		self.refreshEmpBtn.Bind( wx.EVT_BUTTON, self.refreshEmpClick )
 		self.editEmpBtn.Bind( wx.EVT_BUTTON, self.editEmpClick )
@@ -734,15 +687,6 @@ class Employee ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def HomeMenuBtnClick( self, event ):
-		event.Skip()
-
-	def AboutMenu( self, event ):
-		event.Skip()
-
-	def HelpMenu( self, event ):
-		event.Skip()
-
-	def LogoutMenu( self, event ):
 		event.Skip()
 
 	def addEmpClick( self, event ):
@@ -1021,15 +965,6 @@ class Transaction ( wx.Frame ):
 		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu7.Append( self.m_menuItem12 )
 
-		self.m_menuItem13 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem13 )
-
-		self.m_menuItem14 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem14 )
-
-		self.m_menuItem15 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem15 )
-
 		self.m_menubar2.Append( self.m_menu7, u"Menu" )
 
 		self.SetMenuBar( self.m_menubar2 )
@@ -1139,9 +1074,6 @@ class Transaction ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.HomeMenuBtnClick, id = self.m_menuItem12.GetId() )
-		self.Bind( wx.EVT_MENU, self.AboutMenu, id = self.m_menuItem13.GetId() )
-		self.Bind( wx.EVT_MENU, self.HelpMenu, id = self.m_menuItem14.GetId() )
-		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem15.GetId() )
 		self.listCtrlTransaction.Bind( wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc )
 		self.inputDataBtn.Bind( wx.EVT_BUTTON, self.inputDataClick )
 		self.deleteDataBtn.Bind( wx.EVT_BUTTON, self.deleteDataClick )
@@ -1155,15 +1087,6 @@ class Transaction ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def HomeMenuBtnClick( self, event ):
-		event.Skip()
-
-	def AboutMenu( self, event ):
-		event.Skip()
-
-	def HelpMenu( self, event ):
-		event.Skip()
-
-	def LogoutMenu( self, event ):
 		event.Skip()
 
 	def handleSelectedTranc( self, event ):
@@ -1202,15 +1125,6 @@ class Income ( wx.Frame ):
 		self.m_menu7 = wx.Menu()
 		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu7.Append( self.m_menuItem12 )
-
-		self.m_menuItem13 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem13 )
-
-		self.m_menuItem14 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem14 )
-
-		self.m_menuItem15 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu7.Append( self.m_menuItem15 )
 
 		self.m_menubar2.Append( self.m_menu7, u"Menu" )
 
@@ -1253,9 +1167,6 @@ class Income ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.HomeMenuBtnClick, id = self.m_menuItem12.GetId() )
-		self.Bind( wx.EVT_MENU, self.AboutMenu, id = self.m_menuItem13.GetId() )
-		self.Bind( wx.EVT_MENU, self.HelpMenu, id = self.m_menuItem14.GetId() )
-		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem15.GetId() )
 		self.refreshIncomeBtn.Bind( wx.EVT_BUTTON, self.refreshIncomeClick )
 		self.listCtrlTranc.Bind( wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc )
 
@@ -1265,15 +1176,6 @@ class Income ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def HomeMenuBtnClick( self, event ):
-		event.Skip()
-
-	def AboutMenu( self, event ):
-		event.Skip()
-
-	def HelpMenu( self, event ):
-		event.Skip()
-
-	def LogoutMenu( self, event ):
 		event.Skip()
 
 	def refreshIncomeClick( self, event ):
