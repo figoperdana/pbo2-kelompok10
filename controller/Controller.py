@@ -15,6 +15,7 @@ from view.Help import *
 from view.Add_employee import *
 from view.Add_item import *
 from view import *
+import wx
 
 
 
@@ -41,8 +42,6 @@ class Controller():
 
         # class Home Pemilik
         self.homePemilikView = classHomePemilik(parent=None)
-        self.homePemilikView.Bind(wx.EVT_MENU, self.m_menuItem2)
-        self.homePemilikView.Bind(wx.EVT_MENU, self.AboutMenu)
         self.homePemilikView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.homePemilikView.stock.Bind(wx.EVT_BUTTON, self.stockClick)
         self.homePemilikView.transaction.Bind(wx.EVT_BUTTON, self.transactionClick)
@@ -57,9 +56,6 @@ class Controller():
         # class Stock
         self.StockView = classStock(parent=None)
         self.StockView.Bind(wx.EVT_MENU, self.HomeMenuBtnClick)
-        self.StockView.Bind(wx.EVT_MENU, self.HelpMenu2)
-        self.StockView.Bind(wx.EVT_MENU, self.AboutMenu2)
-        self.StockView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.StockView.addItemBtn.Bind(wx.EVT_BUTTON, self.addItemClick)
         self.StockView.refreshItemBtn.Bind(wx.EVT_BUTTON, self.refreshItemClick)
         self.StockView.editItemBtn.Bind(wx.EVT_BUTTON, self.editItemClick)
@@ -71,12 +67,10 @@ class Controller():
         self.AddItemView = classAddItem(parent=None)
         self.AddItemView.saveItemBtn.Bind(wx.EVT_BUTTON, self.saveItemClick)
 
+
         # class Employee
         self.EmployeeView = classEmployee(parent=None)
         self.EmployeeView.Bind(wx.EVT_MENU, self.HomeMenuBtnClick)
-        self.EmployeeView.Bind(wx.EVT_MENU, self.HelpMenu2)
-        self.EmployeeView.Bind(wx.EVT_MENU, self.AboutMenu2)
-        self.EmployeeView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.EmployeeView.addEmpBtn.Bind(wx.EVT_BUTTON, self.addEmpClick)
         self.EmployeeView.refreshEmpBtn.Bind(wx.EVT_BUTTON, self.refreshEmpClick)
         self.EmployeeView.editEmpBtn.Bind(wx.EVT_BUTTON, self.editEmpClick)
@@ -97,9 +91,6 @@ class Controller():
         #class Transaction
         self.TransactionView = classTransaction(parent=None)
         self.TransactionView.Bind(wx.EVT_MENU, self.HomeMenuBtnClick)
-        self.TransactionView.Bind(wx.EVT_MENU, self.HelpMenu2)
-        self.TransactionView.Bind(wx.EVT_MENU, self.AboutMenu2)
-        self.TransactionView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.TransactionView.listCtrlTransaction.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc)
         self.TransactionView.inputDataBtn.Bind(wx.EVT_BUTTON, self.inputDataClick)
         self.TransactionView.deleteDataBtn.Bind(wx.EVT_BUTTON, self.deleteDataClick)
@@ -111,9 +102,6 @@ class Controller():
         #class Income
         self.IncomeView = classIncome(parent=None)
         self.IncomeView.Bind(wx.EVT_MENU, self.HomeMenuBtnClick)
-        self.IncomeView.Bind(wx.EVT_MENU, self.HelpMenu2)
-        self.IncomeView.Bind(wx.EVT_MENU, self.AboutMenu2)
-        self.IncomeView.Bind(wx.EVT_MENU, self.LogoutMenu)
         self.IncomeView.refreshIncomeBtn.Bind(wx.EVT_BUTTON, self.refreshIncomeClick)
         self.IncomeView.listCtrlTranc.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc)
 
@@ -127,7 +115,7 @@ class Controller():
         cursor.execute(query, (userpemilik, passwpemilik))
         if cursor.fetchall():
             wx.MessageBox("Login Berhasil!", "Login")
-            self.loginView.Hide()
+            self.loginView.Close()
             self.homePemilikView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
@@ -147,44 +135,31 @@ class Controller():
         cursor.execute(query, (userpegawai, passwpegawai))
         if cursor.fetchall():
             wx.MessageBox("Login Pegawai Berhasil!", "Login")
-            self.loginView.Hide()
-            self.loginPegawaiView.Hide()
+            self.loginView.Close()
+            self.loginPegawaiView.Close()
             self.homePegawaiView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
 
     def stockClick(self, event):
         self.StockView.Show()
+        self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
 
     def transactionClick(self, event):
         self.TransactionView.Show()
+        self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
 
     def employeeClick(self, event):
         self.EmployeeView.Show()
+        self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
 
     def incomeClick(self, event):
         self.IncomeView.Show()
-
-    def m_menuItem2(self, event):
-        self.HelpView.Show()
-
-    def AboutMenu(self, event):
-        frame12 = classAbout(None)
-        frame12.Show()
-
-    def HelpMenu2(self, event):
-        self.HelpView.Show()
-
-    def AboutMenu2(self, event):
-        self.AboutView.Show()
-
-    def LogoutMenu(self, event):
-        self.loginPegawaiView.Show()
-
-    def HomeMenuBtnClick(self, event):
-        self.homePemilikView.Show()
-
-
+        self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
 
 
     #Transaction Controller
@@ -412,6 +387,32 @@ class Controller():
             self.IncomeView.listCtrlTranc.InsertItem(rowIndex, row[0])
             for columnIndex, col in enumerate(self.IncomeView.columns):
                 self.IncomeView.listCtrlTranc.SetItem(rowIndex, columnIndex, str(row[columnIndex]))
+
+    def HomeMenuBtnClick(self, event):
+        self.StockView.Hide()
+        self.EmployeeView.Hide()
+        self.IncomeView.Hide()
+        self.TransactionView.Hide()
+        self.homePemilikView = classHomePemilik(parent=None)
+        self.homePemilikView.Show()
+        self.homePemilikView.stock.Bind(wx.EVT_BUTTON, self.stockClick)
+        self.homePemilikView.transaction.Bind(wx.EVT_BUTTON, self.transactionClick)
+        self.homePemilikView.employee.Bind(wx.EVT_BUTTON, self.employeeClick)
+        self.homePemilikView.income.Bind(wx.EVT_BUTTON, self.incomeClick)
+        self.homePemilikView.Bind(wx.EVT_MENU, self.LogoutMenu)
+
+    def LogoutMenu(self, event):
+        self.homePemilikView.Close()
+        self.homePegawaiView.Close()
+        self.loginView.Show()
+
+
+
+
+
+
+
+
 
 
 
