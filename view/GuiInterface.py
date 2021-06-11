@@ -59,90 +59,11 @@ class Login ( wx.Frame ):
 
 		gSizer4 = wx.GridSizer( 1, 0, 0, 210 )
 
-		self.loginPegawaiBtn = wx.Button( self, wx.ID_ANY, u"Login As Employee", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginPegawaiBtn, 0, wx.ALL, 5 )
+		self.loginEmpBtn = wx.Button( self, wx.ID_ANY, u"Login As Employee", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginEmpBtn, 0, wx.ALL, 5 )
 
-		self.loginBtn = wx.Button( self, wx.ID_ANY, u"Sign In", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
-
-
-		bSizer10.Add( gSizer4, 1, wx.ALL|wx.EXPAND, 5 )
-
-
-		self.SetSizer( bSizer10 )
-		self.Layout()
-
-		self.Centre( wx.BOTH )
-
-		# Connect Events
-		self.loginPegawaiBtn.Bind( wx.EVT_BUTTON, self.loginPegawaiClick )
-		self.loginBtn.Bind( wx.EVT_BUTTON, self.loginClick )
-
-	def __del__( self ):
-		pass
-
-
-	# Virtual event handlers, overide them in your derived class
-	def loginPegawaiClick( self, event ):
-		event.Skip()
-
-	def loginClick( self, event ):
-		event.Skip()
-
-
-###########################################################################
-## Class LoginPegawai
-###########################################################################
-
-class LoginPegawai ( wx.Frame ):
-
-	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Login For Employees", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
-
-		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
-		self.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BACKGROUND ) )
-		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INACTIVECAPTION ) )
-
-		bSizer10 = wx.BoxSizer( wx.VERTICAL )
-
-		gSizer2 = wx.GridSizer( 1, 1, 0, 0 )
-
-		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u"Welcome back to Firo Smart Seller !", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText10.Wrap( -1 )
-
-		gSizer2.Add( self.m_staticText10, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
-
-
-		bSizer10.Add( gSizer2, 1, wx.ALL|wx.EXPAND, 5 )
-
-		gSizer3 = wx.GridSizer( 4, 1, 0, 0 )
-
-		self.m_staticText11 = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText11.Wrap( -1 )
-
-		gSizer3.Add( self.m_staticText11, 0, wx.ALL, 5 )
-
-		self.CtrlUsername = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.CtrlUsername, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
-
-		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText12.Wrap( -1 )
-
-		gSizer3.Add( self.m_staticText12, 0, wx.ALL, 5 )
-
-		self.CtrlPassword = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
-		gSizer3.Add( self.CtrlPassword, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
-
-
-		bSizer10.Add( gSizer3, 1, wx.ALL|wx.EXPAND, 5 )
-
-		gSizer4 = wx.GridSizer( 1, 0, 0, 210 )
-
-		self.loginAdminBtn = wx.Button( self, wx.ID_ANY, u"Login As Admin", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginAdminBtn, 0, wx.ALL, 5 )
-
-		self.loginEmployeeBtn = wx.Button( self, wx.ID_ANY, u"Sign In", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginEmployeeBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		self.loginOwnerBtn = wx.Button( self, wx.ID_ANY, u"Login As Owner", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginOwnerBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 
 		bSizer10.Add( gSizer4, 1, wx.ALL|wx.EXPAND, 5 )
@@ -154,18 +75,18 @@ class LoginPegawai ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.loginAdminBtn.Bind( wx.EVT_BUTTON, self.loginAdminClick )
-		self.loginEmployeeBtn.Bind( wx.EVT_BUTTON, self.loginEmployeeClick )
+		self.loginEmpBtn.Bind( wx.EVT_BUTTON, self.loginEmpClick )
+		self.loginOwnerBtn.Bind( wx.EVT_BUTTON, self.loginOwnerClick )
 
 	def __del__( self ):
 		pass
 
 
 	# Virtual event handlers, overide them in your derived class
-	def loginAdminClick( self, event ):
+	def loginEmpClick( self, event ):
 		event.Skip()
 
-	def loginEmployeeClick( self, event ):
+	def loginOwnerClick( self, event ):
 		event.Skip()
 
 
@@ -267,12 +188,6 @@ class HomePegawai ( wx.Frame ):
 
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
-		self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.Append( self.m_menuItem1 )
-
-		self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Help", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.Append( self.m_menuItem2 )
-
 		self.m_menuItem11 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Logout", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.Append( self.m_menuItem11 )
 
@@ -310,8 +225,6 @@ class HomePegawai ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.Bind( wx.EVT_MENU, self.AboutMenu, id = self.m_menuItem1.GetId() )
-		self.Bind( wx.EVT_MENU, self.HelpMenu, id = self.m_menuItem2.GetId() )
 		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem11.GetId() )
 		self.stock.Bind( wx.EVT_BUTTON, self.stockClick )
 		self.transaction.Bind( wx.EVT_BUTTON, self.transactionClick )
@@ -321,12 +234,6 @@ class HomePegawai ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
-	def AboutMenu( self, event ):
-		event.Skip()
-
-	def HelpMenu( self, event ):
-		event.Skip()
-
 	def LogoutMenu( self, event ):
 		event.Skip()
 
@@ -368,7 +275,7 @@ class Stock ( wx.Frame ):
 
 		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 100000, 10 )
+		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 250, 10 )
 		self.limitData.SetMinSize( wx.Size( 70,-1 ) )
 
 		bSizer4.Add( self.limitData, 0, wx.ALL, 5 )
@@ -626,7 +533,7 @@ class Employee ( wx.Frame ):
 
 		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 100000, 10 )
+		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 250, 10 )
 		self.limitData.SetMinSize( wx.Size( 70,-1 ) )
 
 		bSizer4.Add( self.limitData, 0, wx.ALL, 5 )
@@ -1137,7 +1044,7 @@ class Income ( wx.Frame ):
 
 		gSizer68.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 10, 10 )
+		self.limitData = wx.SpinCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 250, 10 )
 		gSizer68.Add( self.limitData, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 		self.refreshIncomeBtn = wx.Button( self, wx.ID_ANY, u"Refresh Data", wx.DefaultPosition, wx.DefaultSize, 0 )

@@ -2,8 +2,8 @@ import view.GuiInterface
 from view.GuiInterface import *
 from models import stok
 from models import income
+from models import pegawai
 from view.Login import *
-from view.LoginEmployees import *
 from view.HomePegawai import *
 from view.HomePemilik import *
 from view.Stock import *
@@ -32,13 +32,8 @@ class Controller():
 
         # class login
         self.loginView = classLoginFrame(parent=None)
-        self.loginView.loginPegawaiBtn.Bind(wx.EVT_BUTTON, self.loginPegawaiClick)
-        self.loginView.loginBtn.Bind(wx.EVT_BUTTON, self.loginClick)
-
-        # class login pegawai
-        self.loginPegawaiView = classLoginPegawaiFrame(parent=None)
-        self.loginPegawaiView.loginAdminBtn.Bind(wx.EVT_BUTTON, self.loginAdminClick)
-        self.loginPegawaiView.loginEmployeeBtn.Bind(wx.EVT_BUTTON, self.loginEmployeeClick)
+        self.loginView.loginEmpBtn.Bind(wx.EVT_BUTTON, self.loginEmpClick)
+        self.loginView.loginOwnerBtn.Bind(wx.EVT_BUTTON, self.loginOwnerClick)
 
         # class Home Pemilik
         self.homePemilikView = classHomePemilik(parent=None)
@@ -106,8 +101,11 @@ class Controller():
         self.IncomeView.refreshIncomeBtn.Bind(wx.EVT_BUTTON, self.refreshIncomeClick)
         self.IncomeView.listCtrlTranc.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc)
 
+    def loginOwnerClick(self, event):
+        self.homePemilikView.Show()
+
     #login
-    def loginClick(self, event):
+    def loginOwnerClick(self, event):
         self._connection = database.connection
         userpemilik = self.loginView.CtrlUsername.GetValue()
         passwpemilik = self.loginView.CtrlPassword.GetValue()
@@ -117,28 +115,23 @@ class Controller():
         if cursor.fetchall():
             wx.MessageBox("Login Berhasil!", "Login")
             self.loginView.Hide()
-            self.loginPegawaiView.Hide()
             self.homePemilikView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
 
-    def loginPegawaiClick(self, event):
-        self.loginPegawaiView.Show()
+    def loginEmpClick(self, event):
+        self.homePegawaiView.Show()
 
-    def loginAdminClick(self, event):
-        self.homePemilikView.Show()
-
-    def loginEmployeeClick(self, event):
+    def loginEmpClick(self, event):
         self._connection = database.connection
-        userpegawai = self.loginPegawaiView.CtrlUsername.GetValue()
-        passwpegawai = self.loginPegawaiView.CtrlPassword.GetValue()
+        userpegawai = self.loginView.CtrlUsername.GetValue()
+        passwpegawai = self.loginView.CtrlPassword.GetValue()
         query = """SELECT * from user_pegawai where username = ? and password = ?"""
         cursor = self._connection.cursor()
         cursor.execute(query, (userpegawai, passwpegawai))
         if cursor.fetchall():
             wx.MessageBox("Login Pegawai Berhasil!", "Login")
             self.loginView.Hide()
-            self.loginPegawaiView.Hide()
             self.homePegawaiView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
