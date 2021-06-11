@@ -1,8 +1,11 @@
 import wx
-import controller
+from controller.Controller import Controller
+class MainApp(wx.App):
+    def OnInit(self):
+        self.frame = Controller()
+        self.frame.main()
+        return True
 
-app = wx.App(False)
-
-frame = controller.MyGui(parent=None)
-frame.Show()
-app.MainLoop()
+if __name__ == '__main__':
+    app = MainApp()
+    app.MainLoop()
