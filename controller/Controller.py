@@ -170,6 +170,10 @@ class Controller():
         else :
             wx.MessageBox("Error", "Login Gagal !")
 
+    def loginAdminClick(self, event):
+        self.loginPegawaiView.Hide()
+        self.loginView.Show()
+
     def stockClick(self, event):
         self.StockView.Show()
         self.homePemilikView.Hide()
