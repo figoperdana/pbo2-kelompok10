@@ -46,6 +46,6 @@ Fitur :
 
 # CLASS DIAGRAM FSE ( FIRO SMART SELLER ) 
 
-![](img/class diagram.png)
+![](img/classdiagram.png)
 
 
