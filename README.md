@@ -8,6 +8,7 @@ Anggota Kelompok (Beserta NiM) :
 2. Fitri Dwi Alfina (192410102085) = https://github.com/ffitridwia
 
 Link : https://github.com/figoperdana/pbo2-kelompok10/
+Link Laporan : https://drive.google.com/drive/folders/1PcQXR6-FWP9BJM0U1-62X7C4ebu3Pg29?usp=sharing
 
 
   Proses penjualan dan ketersediaan barang merupakan proses yang sangat penting bagi perusahaan dalam meningkatkan pendapatan perusahaan. Penerapan komputer dan sebuah sistem informasi penjualan dan ketersediaan barang menjadi suatu solusi karena dapat mendukung kinerja dalam bagian-bagian yang berhubungan dengan penjualan serta mendukung pengambilan keputusan untuk mencapai tujuan perusahaan. Di Toko Firo masih kurang dalam pendataan transaksi dan pendataan ketersediaan barang petugas harus mendata transaksi secara manual hal ini membuat banyak kesalahan saat mendata transaksi dari ketersediaan barang. Cara manual ini pastinya akan memakan waktu yang cukup lama dan tidak efisien dalam pelayanan pada pelanggan atau pengecekan barang, banyak menimbulkan kesalahan pada saat pendataan transaksi atau penyetokan barang. Cara manual ini pastinya akan memakan waktu yang cukup lama dalam pelayanan pada pelanggan atau pengecekan barang serta banyak menimbulkan kesalahan pada saat pendataan transaksi atau penyetokan barang. 
