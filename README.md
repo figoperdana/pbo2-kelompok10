@@ -40,4 +40,4 @@ Fitur :
   
 - Logout yaitu user keluar dari program FSE (Firo Smart Seller)
 
-![](img/ERD.png)
+![](img/erd.png)
