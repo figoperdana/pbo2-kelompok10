@@ -18,3 +18,5 @@ class classAddItem(Add_item):
     def setUnitQuantity(self, UnitQuantity):
         self.jumlahBarang.SetValue(str(UnitQuantity))
 
+
+
