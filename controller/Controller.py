@@ -1,3 +1,4 @@
+from os import SEEK_CUR
 import view.GuiInterface
 from view.GuiInterface import *
 from models import stok
@@ -10,8 +11,6 @@ from view.Stock import *
 from view.Employee import *
 from view.Transaction import *
 from view.Income import *
-from view.About import *
-from view.Help import *
 from view.Add_employee import *
 from view.Add_item import *
 from view import *
@@ -77,12 +76,6 @@ class Controller():
         #class add employee
         self.AddEmployeeView = classAddEmployee(parent=None)
         self.AddEmployeeView.saveEmpBtn.Bind(wx.EVT_BUTTON, self.saveEmpClick)
-
-        #class Aboout
-        self.AboutView = classAbout(parent=None)
-
-        # class Help
-        self.HelpView = classHelp(parent=None)
 
         #class Transaction
         self.TransactionView = classTransaction(parent=None)
@@ -395,7 +388,7 @@ class Controller():
         self.homePemilikView.employee.Bind(wx.EVT_BUTTON, self.employeeClick)
         self.homePemilikView.income.Bind(wx.EVT_BUTTON, self.incomeClick)
         self.homePemilikView.Bind(wx.EVT_MENU, self.LogoutMenu)
-        
+    
 
     def LogoutMenu(self, event):
         self.homePemilikView.Hide()
