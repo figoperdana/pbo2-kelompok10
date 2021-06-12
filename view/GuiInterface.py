@@ -59,11 +59,11 @@ class Login ( wx.Frame ):
 
 		gSizer4 = wx.GridSizer( 1, 0, 0, 210 )
 
-		self.loginEmpBtn = wx.Button( self, wx.ID_ANY, u"Login As Employee", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginEmpBtn, 0, wx.ALL, 5 )
+		self.loginPegawaiBtn = wx.Button( self, wx.ID_ANY, u"Login As Employee", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginPegawaiBtn, 0, wx.ALL, 5 )
 
-		self.loginOwnerBtn = wx.Button( self, wx.ID_ANY, u"Login As Owner", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.loginOwnerBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		self.loginBtn = wx.Button( self, wx.ID_ANY, u"Sign In", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 
 		bSizer10.Add( gSizer4, 1, wx.ALL|wx.EXPAND, 5 )
@@ -75,18 +75,97 @@ class Login ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.loginEmpBtn.Bind( wx.EVT_BUTTON, self.loginEmpClick )
-		self.loginOwnerBtn.Bind( wx.EVT_BUTTON, self.loginOwnerClick )
+		self.loginPegawaiBtn.Bind( wx.EVT_BUTTON, self.loginPegawaiClick )
+		self.loginBtn.Bind( wx.EVT_BUTTON, self.loginClick )
 
 	def __del__( self ):
 		pass
 
 
 	# Virtual event handlers, overide them in your derived class
-	def loginEmpClick( self, event ):
+	def loginPegawaiClick( self, event ):
 		event.Skip()
 
-	def loginOwnerClick( self, event ):
+	def loginClick( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class LoginPegawai
+###########################################################################
+
+class LoginPegawai ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Login For Employees", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BACKGROUND ) )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INACTIVECAPTION ) )
+
+		bSizer10 = wx.BoxSizer( wx.VERTICAL )
+
+		gSizer2 = wx.GridSizer( 1, 1, 0, 0 )
+
+		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u"Welcome back to Firo Smart Seller !", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText10.Wrap( -1 )
+
+		gSizer2.Add( self.m_staticText10, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+
+		bSizer10.Add( gSizer2, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer3 = wx.GridSizer( 4, 1, 0, 0 )
+
+		self.m_staticText11 = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText11.Wrap( -1 )
+
+		gSizer3.Add( self.m_staticText11, 0, wx.ALL, 5 )
+
+		self.CtrlUsername = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.CtrlUsername, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
+
+		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText12.Wrap( -1 )
+
+		gSizer3.Add( self.m_staticText12, 0, wx.ALL, 5 )
+
+		self.CtrlPassword = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
+		gSizer3.Add( self.CtrlPassword, 0, wx.ALL|wx.EXPAND|wx.LEFT, 5 )
+
+
+		bSizer10.Add( gSizer3, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer4 = wx.GridSizer( 1, 0, 0, 210 )
+
+		self.loginAdminBtn = wx.Button( self, wx.ID_ANY, u"Login As Admin", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginAdminBtn, 0, wx.ALL, 5 )
+
+		self.loginEmployeeBtn = wx.Button( self, wx.ID_ANY, u"Sign In", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer4.Add( self.loginEmployeeBtn, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+
+		bSizer10.Add( gSizer4, 1, wx.ALL|wx.EXPAND, 5 )
+
+
+		self.SetSizer( bSizer10 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.loginAdminBtn.Bind( wx.EVT_BUTTON, self.loginAdminClick )
+		self.loginEmployeeBtn.Bind( wx.EVT_BUTTON, self.loginEmployeeClick )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def loginAdminClick( self, event ):
+		event.Skip()
+
+	def loginEmployeeClick( self, event ):
 		event.Skip()
 
 
@@ -226,8 +305,8 @@ class HomePegawai ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.LogoutMenu, id = self.m_menuItem11.GetId() )
-		self.stock.Bind( wx.EVT_BUTTON, self.stockClick )
-		self.transaction.Bind( wx.EVT_BUTTON, self.transactionClick )
+		self.stock.Bind( wx.EVT_BUTTON, self.stockPegawaiClick )
+		self.transaction.Bind( wx.EVT_BUTTON, self.transactionPegawaiClick )
 
 	def __del__( self ):
 		pass
@@ -237,10 +316,10 @@ class HomePegawai ( wx.Frame ):
 	def LogoutMenu( self, event ):
 		event.Skip()
 
-	def stockClick( self, event ):
+	def stockPegawaiClick( self, event ):
 		event.Skip()
 
-	def transactionClick( self, event ):
+	def transactionPegawaiClick( self, event ):
 		event.Skip()
 
 
@@ -275,7 +354,7 @@ class Stock ( wx.Frame ):
 
 		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 250, 10 )
+		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 100000, 10 )
 		self.limitData.SetMinSize( wx.Size( 70,-1 ) )
 
 		bSizer4.Add( self.limitData, 0, wx.ALL, 5 )
@@ -336,6 +415,116 @@ class Stock ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def HomeMenuBtnClick( self, event ):
+		event.Skip()
+
+	def addItemClick( self, event ):
+		event.Skip()
+
+	def refreshItemClick( self, event ):
+		event.Skip()
+
+	def editItemClick( self, event ):
+		event.Skip()
+
+	def deleteItemClick( self, event ):
+		event.Skip()
+
+	def handleSelectedItem( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class StockPegawai
+###########################################################################
+
+class StockPegawai ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Stock", pos = wx.DefaultPosition, size = wx.Size( 800,537 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INACTIVECAPTION ) )
+
+		self.m_menubar2 = wx.MenuBar( 0 )
+		self.m_menu7 = wx.Menu()
+		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu7.Append( self.m_menuItem12 )
+
+		self.m_menubar2.Append( self.m_menu7, u"Menu" )
+
+		self.SetMenuBar( self.m_menubar2 )
+
+		bSizer20 = wx.BoxSizer( wx.VERTICAL )
+
+		self.mainPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer3 = wx.BoxSizer( wx.VERTICAL )
+
+		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+
+
+		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 100000, 10 )
+		self.limitData.SetMinSize( wx.Size( 70,-1 ) )
+
+		bSizer4.Add( self.limitData, 0, wx.ALL, 5 )
+
+		self.addItemBtn = wx.Button( self.mainPanel, wx.ID_ANY, u"Add Item", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer4.Add( self.addItemBtn, 0, wx.ALL, 5 )
+
+		self.refreshItemBtn = wx.Button( self.mainPanel, wx.ID_ANY, u"Refresh Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer4.Add( self.refreshItemBtn, 0, wx.ALL, 5 )
+
+		self.editItemBtn = wx.Button( self.mainPanel, wx.ID_ANY, u"Edit Item", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer4.Add( self.editItemBtn, 0, wx.ALL, 5 )
+
+		self.deleteItemBtn = wx.Button( self.mainPanel, wx.ID_ANY, u"Delete Item", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer4.Add( self.deleteItemBtn, 0, wx.ALL, 5 )
+
+
+		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+
+		bSizer3.Add( bSizer4, 0, wx.ALL|wx.EXPAND, 5 )
+
+		fgSizer3 = wx.FlexGridSizer( 0, 2, 1, 5 )
+		fgSizer3.SetFlexibleDirection( wx.HORIZONTAL )
+		fgSizer3.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_ALL )
+
+		self.listCtrlStok = wx.ListCtrl( self.mainPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_AUTOARRANGE|wx.LC_REPORT )
+		self.listCtrlStok.SetMinSize( wx.Size( 840,480 ) )
+
+		fgSizer3.Add( self.listCtrlStok, 0, wx.ALL, 5 )
+
+
+		bSizer3.Add( fgSizer3, 0, wx.EXPAND, 5 )
+
+
+		self.mainPanel.SetSizer( bSizer3 )
+		self.mainPanel.Layout()
+		bSizer3.Fit( self.mainPanel )
+		bSizer20.Add( self.mainPanel, 1, wx.EXPAND |wx.ALL, 5 )
+
+
+		self.SetSizer( bSizer20 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.Bind( wx.EVT_MENU, self.HomeMenuPegawaiBtnClick, id = self.m_menuItem12.GetId() )
+		self.addItemBtn.Bind( wx.EVT_BUTTON, self.addItemClick )
+		self.refreshItemBtn.Bind( wx.EVT_BUTTON, self.refreshItemClick )
+		self.editItemBtn.Bind( wx.EVT_BUTTON, self.editItemClick )
+		self.deleteItemBtn.Bind( wx.EVT_BUTTON, self.deleteItemClick )
+		self.listCtrlStok.Bind( wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedItem )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def HomeMenuPegawaiBtnClick( self, event ):
 		event.Skip()
 
 	def addItemClick( self, event ):
@@ -533,7 +722,7 @@ class Employee ( wx.Frame ):
 
 		bSizer4.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 250, 10 )
+		self.limitData = wx.SpinCtrl( self.mainPanel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS|wx.SP_WRAP, 0, 100000, 10 )
 		self.limitData.SetMinSize( wx.Size( 70,-1 ) )
 
 		bSizer4.Add( self.limitData, 0, wx.ALL, 5 )
@@ -1016,6 +1205,166 @@ class Transaction ( wx.Frame ):
 
 
 ###########################################################################
+## Class TransactionPegawai
+###########################################################################
+
+class TransactionPegawai ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Transaction", pos = wx.DefaultPosition, size = wx.Size( 637,598 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INACTIVECAPTION ) )
+
+		self.m_menubar2 = wx.MenuBar( 0 )
+		self.m_menu7 = wx.Menu()
+		self.m_menuItem12 = wx.MenuItem( self.m_menu7, wx.ID_ANY, u"Home", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu7.Append( self.m_menuItem12 )
+
+		self.m_menubar2.Append( self.m_menu7, u"Menu" )
+
+		self.SetMenuBar( self.m_menubar2 )
+
+		bSizer32 = wx.BoxSizer( wx.VERTICAL )
+
+		gSizer41 = wx.GridSizer( 1, 6, 0, 0 )
+
+
+		gSizer41.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.m_staticText69 = wx.StaticText( self, wx.ID_ANY, u"Tanggal Transaksi", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText69.Wrap( -1 )
+
+		gSizer41.Add( self.m_staticText69, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+		self.tanggalTransaksiBtn = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DROPDOWN )
+		gSizer41.Add( self.tanggalTransaksiBtn, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer41, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer42 = wx.GridSizer( 0, 6, 0, 0 )
+
+		self.listCtrlTransaction = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 600,300 ), wx.LC_AUTOARRANGE|wx.LC_REPORT )
+		gSizer42.Add( self.listCtrlTransaction, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer42, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer47 = wx.GridSizer( 1, 5, 0, 0 )
+
+		self.m_staticText78 = wx.StaticText( self, wx.ID_ANY, u"Total Bayar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText78.Wrap( -1 )
+
+		gSizer47.Add( self.m_staticText78, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+		self.totalBayarBtn = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer47.Add( self.totalBayarBtn, 0, wx.ALL, 5 )
+
+
+		gSizer47.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.inputDataBtn = wx.Button( self, wx.ID_ANY, u"Input Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer47.Add( self.inputDataBtn, 0, wx.ALL, 5 )
+
+		self.deleteDataBtn = wx.Button( self, wx.ID_ANY, u"Delete Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer47.Add( self.deleteDataBtn, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer47, 1, wx.ALL, 5 )
+
+		gSizer471 = wx.GridSizer( 1, 5, 0, 0 )
+
+		self.m_staticText781 = wx.StaticText( self, wx.ID_ANY, u"Uang Bayar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText781.Wrap( -1 )
+
+		gSizer471.Add( self.m_staticText781, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+		self.uangBayarBtn = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer471.Add( self.uangBayarBtn, 0, wx.ALL, 5 )
+
+
+		gSizer471.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.kembalianDataBtn = wx.Button( self, wx.ID_ANY, u"Kembalian", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer471.Add( self.kembalianDataBtn, 0, wx.ALL, 5 )
+
+		self.checkDataBtn = wx.Button( self, wx.ID_ANY, u"Check", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer471.Add( self.checkDataBtn, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer471, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer472 = wx.GridSizer( 1, 5, 0, 0 )
+
+		self.m_staticText83 = wx.StaticText( self, wx.ID_ANY, u"Uang Kembali", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText83.Wrap( -1 )
+
+		gSizer472.Add( self.m_staticText83, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+		self.uangKembaliBtn = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer472.Add( self.uangKembaliBtn, 0, wx.ALL, 5 )
+
+
+		gSizer472.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+
+		gSizer472.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.okBtn = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer472.Add( self.okBtn, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer472, 1, wx.ALL|wx.EXPAND, 5 )
+
+		gSizer26 = wx.GridSizer( 0, 2, 0, 0 )
+
+
+		bSizer32.Add( gSizer26, 1, wx.EXPAND, 5 )
+
+
+		self.SetSizer( bSizer32 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.Bind( wx.EVT_MENU, self.HomeMenuPegawaiBtnClick, id = self.m_menuItem12.GetId() )
+		self.listCtrlTransaction.Bind( wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc )
+		self.inputDataBtn.Bind( wx.EVT_BUTTON, self.inputDataClick )
+		self.deleteDataBtn.Bind( wx.EVT_BUTTON, self.deleteDataClick )
+		self.kembalianDataBtn.Bind( wx.EVT_BUTTON, self.kembalianDataClick )
+		self.checkDataBtn.Bind( wx.EVT_BUTTON, self.checkDataClick )
+		self.okBtn.Bind( wx.EVT_BUTTON, self.okClick )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def HomeMenuPegawaiBtnClick( self, event ):
+		event.Skip()
+
+	def handleSelectedTranc( self, event ):
+		event.Skip()
+
+	def inputDataClick( self, event ):
+		event.Skip()
+
+	def deleteDataClick( self, event ):
+		event.Skip()
+
+	def kembalianDataClick( self, event ):
+		event.Skip()
+
+	def checkDataClick( self, event ):
+		event.Skip()
+
+	def okClick( self, event ):
+		event.Skip()
+
+
+###########################################################################
 ## Class Income
 ###########################################################################
 
@@ -1044,7 +1393,7 @@ class Income ( wx.Frame ):
 
 		gSizer68.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.limitData = wx.SpinCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 250, 10 )
+		self.limitData = wx.SpinCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 10, 10 )
 		gSizer68.Add( self.limitData, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 		self.refreshIncomeBtn = wx.Button( self, wx.ID_ANY, u"Refresh Data", wx.DefaultPosition, wx.DefaultSize, 0 )

@@ -1,18 +1,21 @@
-from os import SEEK_CUR
 import view.GuiInterface
 from view.GuiInterface import *
 from models import stok
 from models import income
-from models import pegawai
 from view.Login import *
+from view.LoginEmployees import *
 from view.HomePegawai import *
 from view.HomePemilik import *
 from view.Stock import *
 from view.Employee import *
 from view.Transaction import *
 from view.Income import *
+from view.About import *
+from view.Help import *
 from view.Add_employee import *
 from view.Add_item import *
+from view.StockPegawai import *
+from view.TransactionPegawai import *
 from view import *
 import wx
 
@@ -31,8 +34,13 @@ class Controller():
 
         # class login
         self.loginView = classLoginFrame(parent=None)
-        self.loginView.loginEmpBtn.Bind(wx.EVT_BUTTON, self.loginEmpClick)
-        self.loginView.loginOwnerBtn.Bind(wx.EVT_BUTTON, self.loginOwnerClick)
+        self.loginView.loginPegawaiBtn.Bind(wx.EVT_BUTTON, self.loginPegawaiClick)
+        self.loginView.loginBtn.Bind(wx.EVT_BUTTON, self.loginClick)
+
+        # class login pegawai
+        self.loginPegawaiView = classLoginPegawaiFrame(parent=None)
+        self.loginPegawaiView.loginAdminBtn.Bind(wx.EVT_BUTTON, self.loginAdminClick)
+        self.loginPegawaiView.loginEmployeeBtn.Bind(wx.EVT_BUTTON, self.loginEmployeeClick)
 
         # class Home Pemilik
         self.homePemilikView = classHomePemilik(parent=None)
@@ -45,8 +53,8 @@ class Controller():
         #class Home Pegawai
         self.homePegawaiView = classHomePegawai(parent=None)
         self.homePegawaiView.Bind(wx.EVT_MENU, self.LogoutMenu)
-        self.homePegawaiView.stock.Bind(wx.EVT_BUTTON, self.stockClick)
-        self.homePegawaiView.transaction.Bind(wx.EVT_BUTTON, self.transactionClick)
+        self.homePegawaiView.stock.Bind(wx.EVT_BUTTON, self.stockPegawaiClick)
+        self.homePegawaiView.transaction.Bind(wx.EVT_BUTTON, self.transactionPegawaiClick)
 
         # class Stock
         self.StockView = classStock(parent=None)
@@ -77,6 +85,12 @@ class Controller():
         self.AddEmployeeView = classAddEmployee(parent=None)
         self.AddEmployeeView.saveEmpBtn.Bind(wx.EVT_BUTTON, self.saveEmpClick)
 
+        #class Aboout
+        self.AboutView = classAbout(parent=None)
+
+        # class Help
+        self.HelpView = classHelp(parent=None)
+
         #class Transaction
         self.TransactionView = classTransaction(parent=None)
         self.TransactionView.Bind(wx.EVT_MENU, self.HomeMenuBtnClick)
@@ -94,11 +108,33 @@ class Controller():
         self.IncomeView.refreshIncomeBtn.Bind(wx.EVT_BUTTON, self.refreshIncomeClick)
         self.IncomeView.listCtrlTranc.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc)
 
-    def loginOwnerClick(self, event):
-        self.homePemilikView.Show()
+        # class Stock Pegawai
+        self.StockViewP = classStockPegawai(parent=None)
+        self.StockViewP.Bind(wx.EVT_MENU, self.HomeMenuPegawaiBtnClick)
+        self.StockViewP.addItemBtn.Bind(wx.EVT_BUTTON, self.addItemClick)
+        self.StockViewP.refreshItemBtn.Bind(wx.EVT_BUTTON, self.refreshItemClick)
+        self.StockViewP.editItemBtn.Bind(wx.EVT_BUTTON, self.editItemClick)
+        self.StockViewP.deleteItemBtn.Bind(wx.EVT_BUTTON, self.deleteItemClick)
+        self.StockViewP.listCtrlStok.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedItem)
+        self.StockViewP.selectedItem = None
+
+        # class Add Item Pegawai
+        self.AddItemViewP = classAddItem(parent=None)
+        self.AddItemViewP.saveItemBtn.Bind(wx.EVT_BUTTON, self.saveItemClick)
+
+        #class Transaction Pegawai
+        self.TransactionViewP = classTransactionPegawai(parent=None)
+        self.TransactionViewP.Bind(wx.EVT_MENU, self.HomeMenuPegawaiBtnClick)
+        self.TransactionViewP.listCtrlTransaction.Bind(wx.EVT_LIST_ITEM_SELECTED, self.handleSelectedTranc)
+        self.TransactionViewP.inputDataBtn.Bind(wx.EVT_BUTTON, self.inputDataClick)
+        self.TransactionViewP.deleteDataBtn.Bind(wx.EVT_BUTTON, self.deleteDataClick)
+        self.TransactionViewP.kembalianDataBtn.Bind(wx.EVT_BUTTON, self.kembalianDataClick)
+        self.TransactionViewP.checkDataBtn.Bind(wx.EVT_BUTTON, self.checkDataClick)
+        self.TransactionViewP.okBtn.Bind(wx.EVT_BUTTON, self.okClick)
+        self.TransactionViewP.selectedItem = None
 
     #login
-    def loginOwnerClick(self, event):
+    def loginClick(self, event):
         self._connection = database.connection
         userpemilik = self.loginView.CtrlUsername.GetValue()
         passwpemilik = self.loginView.CtrlPassword.GetValue()
@@ -108,23 +144,28 @@ class Controller():
         if cursor.fetchall():
             wx.MessageBox("Login Berhasil!", "Login")
             self.loginView.Hide()
+            self.loginPegawaiView.Hide()
             self.homePemilikView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
 
-    def loginEmpClick(self, event):
-        self.homePegawaiView.Show()
+    def loginPegawaiClick(self, event):
+        self.loginPegawaiView.Show()
 
-    def loginEmpClick(self, event):
+    def loginAdminClick(self, event):
+        self.homePemilikView.Show()
+
+    def loginEmployeeClick(self, event):
         self._connection = database.connection
-        userpegawai = self.loginView.CtrlUsername.GetValue()
-        passwpegawai = self.loginView.CtrlPassword.GetValue()
+        userpegawai = self.loginPegawaiView.CtrlUsername.GetValue()
+        passwpegawai = self.loginPegawaiView.CtrlPassword.GetValue()
         query = """SELECT * from user_pegawai where username = ? and password = ?"""
         cursor = self._connection.cursor()
         cursor.execute(query, (userpegawai, passwpegawai))
         if cursor.fetchall():
             wx.MessageBox("Login Pegawai Berhasil!", "Login")
             self.loginView.Hide()
+            self.loginPegawaiView.Hide()
             self.homePegawaiView.Show()
         else :
             wx.MessageBox("Error", "Login Gagal !")
@@ -147,6 +188,14 @@ class Controller():
     def incomeClick(self, event):
         self.IncomeView.Show()
         self.homePemilikView.Hide()
+        self.homePegawaiView.Hide()
+
+    def stockPegawaiClick(self, event):
+        self.StockViewP.Show()
+        self.homePegawaiView.Hide()
+
+    def transactionPegawaiClick(self, event):
+        self.TransactionViewP.Show()
         self.homePegawaiView.Hide()
 
 
@@ -388,12 +437,172 @@ class Controller():
         self.homePemilikView.employee.Bind(wx.EVT_BUTTON, self.employeeClick)
         self.homePemilikView.income.Bind(wx.EVT_BUTTON, self.incomeClick)
         self.homePemilikView.Bind(wx.EVT_MENU, self.LogoutMenu)
-    
+        
 
     def LogoutMenu(self, event):
         self.homePemilikView.Hide()
         self.homePegawaiView.Hide()
         self.loginView.Show()
+
+    #Transaction Pegawai Controller
+
+    def inputDataClick( self, event ):
+        if self.TransactionViewP.selectedItem == None : return
+        ambil = self.TransactionViewP.selectedItem
+        hasil = self.TransactionViewP.listCtrlTransaction.GetItemText(item=int(ambil)-1, col=3)
+        tambah = int(hasil) + 1
+        self.TransactionViewP.listCtrlTransaction.SetItem(int(ambil)-1, 3, str(tambah))
+        self.TransactionViewP.okBtn.Disable()
+
+    def deleteDataClick( self, event ):
+        if self.TransactionViewP.selectedItem == None : return
+        ambil = self.TransactionViewP.selectedItem
+        hasil = self.TransactionViewP.listCtrlTransaction.GetItemText(item=int(ambil)-1, col=3)
+        tambah = int(hasil) - 1
+        if hasil == "0"  :
+            self.TransactionViewP.listCtrlTransaction.SetItem(int(ambil)-1, 3, "0")
+        else:
+            self.TransactionViewP.listCtrlTransaction.SetItem(int(ambil)-1, 3, str(tambah))
+        self.TransactionViewP.okBtn.Disable()
+
+    def handleSelectedTranc( self, event ):
+        selectedId = event.GetItem().GetText()
+        if not selectedId: return
+        self.TransactionViewP.selectedItem = selectedId
+
+
+    def checkDataClick(self, event):
+        self.jumlahBarang = 0
+        self.jumlahHarga = 0
+        for row in range(self.TransactionViewP.listCtrlTransaction.GetItemCount()):
+            item = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=3)
+            self.jumlahBarang += int(item)
+        for row in range(self.TransactionViewP.listCtrlTransaction.GetItemCount()):
+            item = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=3)
+            harga = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=2)
+            self.jumlahHarga += (int(item) * int(harga))
+            self.TransactionViewP.totalBayarBtn.SetValue(str(self.jumlahHarga))
+        self.TransactionViewP.okBtn.Enable()
+
+    def kembalianDataClick(self, event):
+        a = int(self.TransactionViewP.totalBayarBtn.GetValue())
+        b = int(self.TransactionViewP.uangBayarBtn.GetValue())
+        result = b - a
+        self.TransactionViewP.uangKembaliBtn.SetValue(str(result))
+
+
+    def okClick(self, event):
+        date_income = self.TransactionViewP.tanggalTransaksiBtn.GetValue()
+        for row in range(self.TransactionViewP.listCtrlTransaction.GetItemCount()):
+            item = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=3)
+            if item != "0":
+                namaBarang = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=1)
+                hargaProduk = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=2)
+                jumlahProduk = self.TransactionViewP.listCtrlTransaction.GetItemText(item=row, col=3)
+        try:
+            if self.id == None:
+                result = self.incomeModel.insert(
+                    values=[namaBarang, int(hargaProduk), int(jumlahProduk), date_income],
+                    columns=['nama_barang', 'harga_barang', 'jumlah_beli','tanggal_transaksi'])
+            else:
+                result = self.incomeModel.update(
+                    colValues={'nama_barang': namaBarang, 'harga_barang': hargaProduk, 'jumlah_beli': jumlahProduk, 'tanggal_transaksi': date_income},
+                    identifierValue=self.id, identifierColumn='id_transaksi')
+
+        except Exception as err:
+            wx.MessageDialog(None, str(err), 'An error occured.', style=wx.OK | wx.ICON_ERROR).ShowModal()
+
+        finally:
+            if self.id == None:
+                wx.MessageDialog(None, 'New Data successfully added.', 'Success',
+                                 style=wx.OK | wx.ICON_INFORMATION).ShowModal()
+
+            else:
+                wx.MessageDialog(None, 'Data has been updated.', 'Update Success',
+                                 style=wx.OK | wx.ICON_INFORMATION).ShowModal()
+
+
+
+
+    #Stock Pegawai Controller
+
+    def addItemClick(self, event):
+        self.AddItemViewP.Show()
+
+    def editItemClick(self, event):
+        if self.selectedItem == None: return
+
+        prod = self.stockModel.find(self.selectedItem, column='id_barang')
+        self.AddItemViewP.setProductName(prod[1])
+        self.AddItemViewP.setCategory(prod[2])
+        self.AddItemViewP.setUnitPrice(prod[3])
+        self.AddItemViewP.setUnitQuantity(prod[4])
+        self.id = self.selectedItem
+        self.AddItemViewP.Show()
+
+    def deleteItemClick(self, event):
+        if self.selectedItem == None: return
+        r = wx.MessageDialog(None, 'This data will be deleted permanently.', 'Are you sure',
+                             style=wx.ICON_WARNING | wx.YES_NO | wx.NO_DEFAULT).ShowModal()
+
+        if r == wx.ID_YES:
+            self.stockModel.delete(value=self.selectedItem, column='id_barang')
+            wx.MessageDialog(None, 'Author has been deleted.', 'Delete Success',
+                             style=wx.OK | wx.ICON_INFORMATION).ShowModal()
+
+    def handleSelectedItem(self, event):
+        selectedId = event.GetItem().GetText()
+        if not selectedId: return
+        self.selectedItem = selectedId
+        print(selectedId)
+
+    def refreshItemClick(self, event):
+        self.StockViewP.listCtrlStok.DeleteAllItems()
+        Stok = self.stockModel.get(columns="*",orderByColumn='id_barang', orderByDirection='DESC', limit=self.StockView.limitData.GetValue())
+        for rowIndex, row in enumerate(Stok):
+            self.StockViewP.listCtrlStok.InsertItem(rowIndex, row[0])
+            for columnIndex, col in enumerate(self.StockViewP.columns):
+                self.StockViewP.listCtrlStok.SetItem(rowIndex, columnIndex, str(row[columnIndex]))
+
+    #add item pegawai controller
+
+    def saveItemClick(self, event):
+        product_name = self.AddItemViewP.namaBarang.GetValue()
+        category = self.AddItemViewP.jenisBarang.GetValue()
+        unit_price = self.AddItemViewP.hargaBarang.GetValue()
+        unit_quantity = self.AddItemViewP.jumlahBarang.GetValue()
+
+        try:
+            if self.id == None:
+                result = self.stockModel.insert(values=[product_name, int(category), int(unit_price), int(unit_quantity)],
+                                                  columns=['nama_barang', 'jenis_barang', 'harga_barang', 'jumlah_barang'])
+            else:
+                result = self.stockModel.update(
+                    colValues={'nama_barang': product_name, 'jenis_barang': category, 'harga_barang': unit_price, 'jumlah_barang': unit_quantity},
+                    identifierValue=self.id, identifierColumn='id_barang')
+
+        except Exception as err:
+            wx.MessageDialog(None, str(err), 'An error occured.', style=wx.OK | wx.ICON_ERROR).ShowModal()
+
+        finally:
+            if self.id == None:
+                wx.MessageDialog(None, 'New Data successfully added.', 'Success',
+                                 style=wx.OK | wx.ICON_INFORMATION).ShowModal()
+
+            else:
+                wx.MessageDialog(None, 'Data has been updated.', 'Update Success',
+                                 style=wx.OK | wx.ICON_INFORMATION).ShowModal()
+
+    def HomeMenuPegawaiBtnClick(self, event):
+        self.StockViewP.Hide()
+        self.TransactionViewP.Hide()
+        self.homePegawaiView = classHomePegawai(parent=None)
+        self.homePegawaiView.Show()
+        self.homePegawaiView.stock.Bind(wx.EVT_BUTTON, self.stockPegawaiClick)
+        self.homePegawaiView.transaction.Bind(wx.EVT_BUTTON, self.transactionPegawaiClick)
+        self.homePegawaiView.Bind(wx.EVT_MENU, self.LogoutMenu)
+
+
 
 
     #================
