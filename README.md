@@ -8,6 +8,7 @@ Anggota Kelompok (Beserta NiM) :
 2. Fitri Dwi Alfina (192410102085) = https://github.com/ffitridwia
 
 Link : https://github.com/figoperdana/pbo2-kelompok10/
+
 Link Laporan : https://drive.google.com/drive/folders/1PcQXR6-FWP9BJM0U1-62X7C4ebu3Pg29?usp=sharing
 
 
